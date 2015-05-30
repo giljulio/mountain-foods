@@ -1,0 +1,78 @@
+<% include ../partials/header.ejs %>
+
+<hgroup id="pagetagline">
+    <h1><?php echo PAGE_NAME; ?></h1>
+    <p><?php echo PAGE_H2; ?></p>
+</hgroup>
+<div class="row">
+    <div id="map-canvas" style="height:175px;"></div>
+</div>
+<div class="row">
+    <div class="col span_6">
+        <h3>Address</h3>
+        <ul style="font-family: 'Open Sans', sans-serif;font-size: 0.75em;margin-bottom: 2em;">
+            <li>The Mountain Food Company Ltd</li>
+            <li>Banc-y-ddol</li>
+            <li>Hebron</li>
+            <li>Whitland</li>
+            <li>Carmarthenshire</li>
+            <li>WALES SA34 0YR</li>
+        </ul>
+
+        <h2>Contact Numbers</h2>
+        <ul style="font-family: 'Open Sans', sans-serif;font-size: 0.75em;margin-bottom: 2em;">
+            <li>Tel: <a href="tel:+441994419555">01994 419555</a></li>
+            <li>Mobile: <a href="tel:+447774949555">07774 949555</a></li>
+        </ul>
+    </div>
+    <div class="col span_6">
+        <h3>Send us an Email</h3>
+        <form method="POST" action="">
+            <label>
+                Name:
+                <input type="text" name="name" />
+            </label>
+            <label>
+                Email:
+                <input type="text" name="email" />
+            </label>
+            <label>
+                Message:
+                <textarea name="message" class="unreset" style="height: 7em;"></textarea>
+            </label>
+            <label>
+                Human Verification: 5+2=?
+                <input type="number" name="name" />
+            </label>
+            <label>
+                <input type="submit" name="Send"/>
+            </label>
+        </form>
+    </div>
+
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script>
+    var map;
+    function initialize() {
+        var mapOptions = {
+            zoom: 13,
+            center: new google.maps.LatLng(51.907973,-4.667479),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById('map-canvas'),
+                mapOptions);
+
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(51.907973,-4.667479),
+            map: map,
+            title: 'The Mountain Food Company Ltd'
+        });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
+
+<% include ../partials/footer.ejs %>

@@ -1,0 +1,101 @@
+<% include ../partials/header.ejs %>
+<hgroup id="pagetagline">
+    <h1>Page name</h1>
+    <p>Subtitle</p>
+</hgroup>
+<div class="row">
+
+    <div class="col span_3 maincontent">
+        <form id="filterbox">
+            <fieldset>
+                <legend>General</legend>
+                <label>
+                    Search:
+                    <input type="text" name="q" value="" />
+                </label>
+                <label>
+                    Sort By:
+                    <select name="sortby">
+                        <option>Popularity</option>
+                        <option>A-Z</option>
+                    </select>
+                </label>
+                <label>
+                    <input type="checkbox" name="onlyavailable" />
+                    Only Available now
+                </label>
+            </fieldset>
+            <hr>
+            <fieldset>
+                <legend>Seasons</legend>
+                <label>
+                    <input type="checkbox" name="spring" />
+                    Spring
+                </label>
+                <label>
+                    <input type="checkbox" name="summer" />
+                    Summer
+                </label>
+                <label>
+                    <input type="checkbox" name="autumn" />
+                    Autumn
+                </label>
+                <label>
+                    <input type="checkbox" name="winter" />
+                    Winter
+                </label>
+            </fieldset>
+            <hr>
+            <fieldset>
+                <legend>Ecosystem</legend>
+                <label>
+                    <input type="checkbox" name="coasts" checked="checked"/>
+                    Coasts & estuaries
+                </label>
+                <label>
+                    <input type="checkbox" name="mountains" checked="checked"/>
+                    Mountains & moorlands
+                </label>
+                <label>
+                    <input type="checkbox" name="hedgerows" checked="checked"/>
+                    Hedgerows & meadows
+                </label>
+                <label>
+                    <input type="checkbox" name="forests" checked="checked"/>
+                    Forests & river banks
+                </label>
+            </fieldset>
+    </div>
+    <div class="col span_9 ">
+        <ul class="productlistings">
+
+            <?php
+
+				$stmt = $db->pdo->prepare("SELECT id, name, description FROM `products`");
+            $stmt->execute(array());
+            $data = array();
+            foreach ($stmt as $result) {
+
+            echo '<li>
+                <article class="maincontent">
+                    <h3>
+                        <a href="'. ROOT_DIR .'wild/'. urlencode($result["name"]).'">' . $result["name"] . '</a>
+                    </h3>
+                    <span class="price">£1 per 100g</span>
+                    <section>
+                        <img src="'. ROOT_DIR .'img/products/01.jpg" alt="'. $result["name"].'"/>
+                        <p>'. $result["description"].'</p>
+                    </section>
+                    <a href="'. ROOT_DIR .'wild/'. urlencode($result["name"]).'" class="more">More info</a>
+                </article>
+            </li>';
+
+            }
+
+            ?>
+        </ul>
+    </div>
+    </form>
+
+</div>
+<% include ../partials/footer.ejs %>
