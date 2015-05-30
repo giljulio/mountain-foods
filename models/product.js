@@ -7,7 +7,7 @@ var ProductSchema = new mongoose.Schema({
     },
     latin_name: {
         type: String,
-        
+
     }
 });
 
