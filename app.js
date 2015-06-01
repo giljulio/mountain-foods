@@ -7,8 +7,11 @@ var bodyParser = require('body-parser'),
     slash   = require('express-slash');
 var mongoose = require('mongoose');
 var env = require('node-env-file');
-
-env(__dirname + '/.env');
+try {
+  env(__dirname + '/.env');
+} catch (e){
+  console.log(e);
+}
 try {
   mongoose.connect(process.env.MONGOLAB_URI);
 } catch (e){
