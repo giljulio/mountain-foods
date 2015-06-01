@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var Product = require('../models/product').Product;
 
 router.get('/', function(req, res, next) {
   res.render('pages/index', {
@@ -28,12 +29,12 @@ router.get('/operation', function(req, res, next) {
     page_h2: null
   });
 });
-router.get('/products/:product_name', function(req, res, next) {
+router.get('/wild/:id-:product_name', function(req, res, next) {
   res.render('pages/products', {
     head: {
-      title: "Wild"
+      title: "Wild "
     },
-    page_h1: "Wild " + "",
+    page_h1: "Wild " + req.params.id + "",
     page_h2: "Wild " + " picked by hand"
   });
 });
@@ -47,12 +48,16 @@ router.get('/about', function(req, res, next) {
   });
 });
 router.get('/catalogue', function(req, res, next) {
-  res.render('pages/catalogue', {
-    head: {
-      title: "Catalogue"
-    },
-    page_h1: "Catalogue",
-    page_h2: "Wild food which is freshly picked and delivered."
+  Product.find(function (err, products) {
+    res.render('pages/catalogue', {
+      head: {
+        title: "Catalogue"
+      },
+      page_h1: "Catalogue",
+      page_h2: "Wild food which is freshly picked and delivered.",
+      products: products,
+      query: req.query
+    });
   });
 });
 

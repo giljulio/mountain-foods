@@ -6,7 +6,7 @@
 <div class="row">
 
     <div class="col span_3 maincontent">
-        <form id="filterbox">
+        <form id="filterbox" method="get">
             <fieldset>
                 <legend>General</legend>
                 <label>
@@ -16,8 +16,9 @@
                 <label>
                     Sort By:
                     <select name="sortby">
-                        <option>Popularity</option>
-                        <option>A-Z</option>
+                        <option value="popularity">Popularity</option>
+                        <option value="price">Price</option>
+                        <option value="az">A-Z</option>
                     </select>
                 </label>
                 <label>
@@ -25,7 +26,7 @@
                     Only Available now
                 </label>
             </fieldset>
-            <hr>
+            <!--<hr>
             <fieldset>
                 <legend>Seasons</legend>
                 <label>
@@ -49,50 +50,41 @@
             <fieldset>
                 <legend>Ecosystem</legend>
                 <label>
-                    <input type="checkbox" name="coasts" checked="checked"/>
+                    <input type="checkbox" name="coasts" <%= (query.coasts == "on" ? "checked" : "") %>/>
                     Coasts & estuaries
                 </label>
                 <label>
-                    <input type="checkbox" name="mountains" checked="checked"/>
+                    <input type="checkbox" name="mountains" <%= (query.mountains == "on" ? "checked" : "") %>/>
                     Mountains & moorlands
                 </label>
                 <label>
-                    <input type="checkbox" name="hedgerows" checked="checked"/>
+                    <input type="checkbox" name="hedgerows" <%= (query.hedgerows == "on" ? "checked" : "") %>/>
                     Hedgerows & meadows
                 </label>
                 <label>
-                    <input type="checkbox" name="forests" checked="checked"/>
+                    <input type="checkbox" name="forests" <%= (query.forests == "on" ? "checked" : "") %>/>
                     Forests & river banks
                 </label>
-            </fieldset>
+            </fieldset>-->
+            <input type="submit" value="Update results" />
     </div>
     <div class="col span_9 ">
         <ul class="productlistings">
-
-            <?php
-
-				$stmt = $db->pdo->prepare("SELECT id, name, description FROM `products`");
-            $stmt->execute(array());
-            $data = array();
-            foreach ($stmt as $result) {
-
-            echo '<li>
+            <% for(var i = 0; i < products.length; i++) { %>
+            <li>
                 <article class="maincontent">
                     <h3>
-                        <a href="'. ROOT_DIR .'wild/'. urlencode($result["name"]).'">' . $result["name"] . '</a>
+                        <a href="/wild/<%= encodeURIComponent(products[i].english_name) %>"><%= products[i].english_name %></a>
                     </h3>
                     <span class="price">£1 per 100g</span>
                     <section>
-                        <img src="'. ROOT_DIR .'img/products/01.jpg" alt="'. $result["name"].'"/>
-                        <p>'. $result["description"].'</p>
+                        <img src="/images/products/<%= products[i]._id %>/0.jpg" alt="<%= products[i].english_name %>"/>
+                        <p><%= products[i].description %></p>
                     </section>
-                    <a href="'. ROOT_DIR .'wild/'. urlencode($result["name"]).'" class="more">More info</a>
+                    <a href="/wild/<%= encodeURIComponent(products[i].english_name) %>" class="more">More info</a>
                 </article>
-            </li>';
-
-            }
-
-            ?>
+            </li>
+            <% } %>
         </ul>
     </div>
     </form>

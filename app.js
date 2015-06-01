@@ -5,6 +5,15 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser'),
     slash   = require('express-slash');
+var mongoose = require('mongoose');
+var env = require('node-env-file');
+
+env(__dirname + '/.env');
+try {
+  mongoose.connect(process.env.MONGOLAB_URI);
+} catch (e){
+  console.log(e);
+}
 
 var routes = require('./routes/index');
 
